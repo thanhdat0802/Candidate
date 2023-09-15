@@ -13,7 +13,7 @@ import view.Validation;
 
 public class CompanyManager extends Menu<String> {
 
-    static String[] menu = {"Experience", "Fresher", "Intern","Searching", "Exit"};
+    static String[] menu = {"Experience", "Fresher", "Intern", "Searching", "Exit"};
     private CandidateManager list = new CandidateManager();
     Validation val = new Validation();
 
@@ -36,6 +36,7 @@ public class CompanyManager extends Menu<String> {
                 break;
             case 4:
                 searching();
+                break;
             case 5:
                 System.exit(0);
         }
@@ -76,7 +77,17 @@ public class CompanyManager extends Menu<String> {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        String email = getValue("Input email: ");
+        String email = null;
+        try {
+                    while (email == null) {
+                        email = val.checkMail(getValue("Input email: "));
+                        if (email == null) {
+                            System.out.println("Please input again in the appropriate format: ");
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
         String candidateType;
         switch (a) {
             case 1:
@@ -107,7 +118,17 @@ public class CompanyManager extends Menu<String> {
                 } catch (Exception ex) {
                     System.out.println(ex.getMessage());
                 }
-                String rank = getValue("Input rank: ");
+                String rank = null;
+                try {
+                    while (rank == null) {
+                        rank = val.checkRank(getValue("Input rank: "));
+                        if (rank == null) {
+                            System.out.println("Please input again in the appropriate format (Good, Excellence, Fair, Poor): ");
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
                 String education = getValue("Input university: ");
                 return new Fresher(graYear, rank, education, candidateId, firstName, lastName, birDate, address, phone, email, candidateType);
             case 3:
@@ -122,35 +143,36 @@ public class CompanyManager extends Menu<String> {
 //-------------------------------------------------------------------------------------------
 
     private void searching() {
-        String[] mSearch = {"Find by FirstName, type", "Find by Lastname, type", "Back to main menu"};
-        Menu m = new Menu("Employee Searching", mSearch) {
-            public void execute(int n) {
+                list.listing();
                 ArrayList<Candidate> rs = null;
                 String input1;
-                String input2;
-                switch (n) {
+                int input2;
+                String type;
 
+                input1 = getValue("Enter first name or last name:");
+                input2 = Integer.parseInt(getValue("Enter CandidateType (0: Experience,1: Fresher or 2: Intern): "));
+                switch (input2) {
+                    case 0:
+                        type = "Experience";
+                        break;
                     case 1:
-                        input1 = getValue("Enter first name :");
-                        input2 = getValue("Enter CandidateType (Experience, Fresher or : ");
-                        rs = list.search(c -> c.getFirstName().equals(input1) && c.getCandidateType().equalsIgnoreCase(input2));
+                        type = "Fresher";
                         break;
                     case 2:
-                        input1 = getValue("Enter last name :");
-                        input2 = getValue("Enter CandidateType: ");
-                        rs = list.search(c -> c.getLastName().equals(input1) && c.getCandidateType().equalsIgnoreCase(input2));
+                        type = "Intern";
                         break;
                     default:
-                        return;
+                        type = null;
+                        break;
                 }
+                rs = list.search(c -> (c.getFirstName().equalsIgnoreCase(input1) || c.getLastName().equalsIgnoreCase(input1)) && c.getCandidateType().equalsIgnoreCase(type));
+
                 if (rs != null) {
                     list.display(rs);
                 }
 
             }
 
-        };
-        m.run();
     }
 
-}
+

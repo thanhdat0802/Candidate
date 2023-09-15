@@ -17,11 +17,6 @@ public class CandidateManager {
         list.add(cd);
     }
     
-    public void display() {
-        for (Candidate candidate : list) {
-            System.out.println(candidate);
-        }
-    }
     public void display(ArrayList<Candidate> rs) {
         for (Candidate candidate : rs) {
             System.out.println(candidate);
@@ -36,6 +31,20 @@ public class CandidateManager {
         }
         return rs;
     }
-
+   public void listing(){
+        System.out.println("===========EXPERIENCE CANDIDATE============");
+        for (Candidate cd : list) {
+            if (cd instanceof Experience) System.out.println(cd.getFirstName() +" " + cd.getLastName());
+        }
+        System.out.println("==========FRESHER CANDIDATE==============");
+        for (Candidate cd : list) {
+            if (cd instanceof Fresher) System.out.println(cd.getFirstName() +" " + cd.getLastName());
+        }
+        System.out.println("===========INTERN CANDIDATE==============");
+        for (Candidate cd : list) {
+            if (cd instanceof Intern) System.out.println(cd.getFirstName() +" " + cd.getLastName());
+        }
+    }
+    
     }
 

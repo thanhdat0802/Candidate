@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import view.Validation;
 
 public class Fresher extends Candidate {
     private Date graduationDate;
@@ -8,7 +9,7 @@ public class Fresher extends Candidate {
     private String education;
 
     public Fresher(Date graduationDate, String rank, String education, String candidateId, String firstName, String lastName, Date birthDate, String address, String phone, String email, String candidateType) {
-        super(candidateId, firstName, lastName, birthDate, address, phone, email, "Fresher");
+        super(candidateId, firstName, lastName, birthDate, address, phone, email, candidateType);
         this.graduationDate = graduationDate;
         this.rank = rank;
         this.education = education;
@@ -37,6 +38,10 @@ public class Fresher extends Candidate {
     public void setEducation(String education) {
         this.education = education;
     }
+
+   
+
+  
 
  
 }

@@ -1,6 +1,7 @@
 package model;
 
 import java.util.Date;
+import view.Validation;
 
 public class Candidate {
     private String candidateId;
@@ -86,10 +87,13 @@ public class Candidate {
     public void setCandidateType(String candidateType) {
         this.candidateType = candidateType;
     }
-
+    
+ 
+//: Candidate name (First Name + Last Name), Birth Date, Address, Phone, Email and Candidate type. 
     @Override
     public String toString() {
-        return "Candidate{" + "candidateId=" + candidateId + ", firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", address=" + address + ", phone=" + phone + ", email=" + email + ", candidateType=" + candidateType + '}';
+        return firstName + " " + lastName + " | " + (new Validation()).showDate(birthDate) + " | " + address + " | " + phone + " | " + email + " | " + candidateType ;
     }
+    
     
 }

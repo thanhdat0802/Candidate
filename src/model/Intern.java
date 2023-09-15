@@ -8,7 +8,7 @@ public class Intern extends Candidate {
     private String nameUni;
 
     public Intern(String majors, String semeter, String nameUni, String candidateId, String firstName, String lastName, Date birthDate, String address, String phone, String email, String candidateType) {
-        super(candidateId, firstName, lastName, birthDate, address, phone, email, "Experiece");
+        super(candidateId, firstName, lastName, birthDate, address, phone, email, candidateType);
         this.majors = majors;
         this.semeter = semeter;
         this.nameUni = nameUni;
@@ -38,5 +38,6 @@ public class Intern extends Candidate {
         this.nameUni = nameUni;
     }
 
+  
  
 }
