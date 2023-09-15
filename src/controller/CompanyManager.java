@@ -6,6 +6,8 @@ import java.util.Scanner;
 import controller.CandidateManager;
 import model.Candidate;
 import model.Experience;
+import model.Fresher;
+import model.Intern;
 import view.Menu;
 import view.Validation;
 
@@ -85,17 +87,28 @@ public class CompanyManager extends Menu<String> {
                 return new Experience(year, proSkill, candidateId, firstName, lastName, birDate, address, phone, email, candidateType);
             case 2:
                 candidateType = "Fresher";
-                String graYear = getValue("Input year graduated: ");
+                Date graYear = null;
+                try {
+                    while (graYear == null) {
+                        graYear = val.checkValidDate(getValue("Input year experienced: "));
+                        if (graYear == null) {
+                            System.out.println("Please input again in the appropriate format (0-100): ");
+                        }
+                    }
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
                 String rank = getValue("Input rank: ");
                 String education = getValue("Input university: ");
-                break;
+                return new Fresher(graYear, rank, education, candidateId, firstName, lastName, birDate, address, phone, email, candidateType);
             case 3:
                 candidateType = "Experience";
                 String major = getValue("Input major: ");
                 String semester = getValue("Input semester: ");
                 String university = getValue("Input university: ");
-                break;
+                return new Intern(major, semester, university, candidateId, firstName, lastName, birDate, address, phone, email, candidateType);
         }
+        return null;
     }
 
 }
