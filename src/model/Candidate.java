@@ -86,4 +86,10 @@ public class Candidate {
     public void setCandidateType(String candidateType) {
         this.candidateType = candidateType;
     }
+
+    @Override
+    public String toString() {
+        return "Candidate{" + "candidateId=" + candidateId + ", firstName=" + firstName + ", lastName=" + lastName + ", birthDate=" + birthDate + ", address=" + address + ", phone=" + phone + ", email=" + email + ", candidateType=" + candidateType + '}';
+    }
+    
 }

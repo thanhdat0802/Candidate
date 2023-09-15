@@ -13,7 +13,7 @@ import view.Validation;
 
 public class CompanyManager extends Menu<String> {
 
-    static String[] menu = {"Experience","Fresher","Intern", "Exit"};
+    static String[] menu = {"Experience", "Fresher", "Intern","Searching", "Exit"};
     private CandidateManager list = new CandidateManager();
     Validation val = new Validation();
 
@@ -35,6 +35,8 @@ public class CompanyManager extends Menu<String> {
                 list.addCandidate(inputCandidate(3));
                 break;
             case 4:
+                searching();
+            case 5:
                 System.exit(0);
         }
     }
@@ -52,28 +54,28 @@ public class CompanyManager extends Menu<String> {
         String firstName = getValue("Input first name: ");
         String lastName = getValue("Input last name: ");
         Date birDate = null;
-                try {
-                    while (birDate == null) {
-                        birDate = val.checkValidDate(getValue("Input birthdate: "));
-                        if (birDate == null) {
-                            System.out.println("Please input again in the appropriate format (xx/yy/zzzz): ");
-                        }
-                    }
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+        try {
+            while (birDate == null) {
+                birDate = val.checkValidDate(getValue("Input birthdate: "));
+                if (birDate == null) {
+                    System.out.println("Please input again in the appropriate format (xx/yy/zzzz): ");
                 }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         String address = getValue("Input address: ");
         String phone = null;
-                try {
-                    while (phone == null) {
-                        phone = val.checkPhone(getValue("Input phone number:  "));
-                        if (phone == null) {
-                            System.out.println("Please input again in the appropriate format: ");
-                        }
-                    }
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+        try {
+            while (phone == null) {
+                phone = val.checkPhone(getValue("Input phone number:  "));
+                if (phone == null) {
+                    System.out.println("Please input again in the appropriate format: ");
                 }
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
         String email = getValue("Input email: ");
         String candidateType;
         switch (a) {
@@ -116,6 +118,39 @@ public class CompanyManager extends Menu<String> {
                 return new Intern(major, semester, university, candidateId, firstName, lastName, birDate, address, phone, email, candidateType);
         }
         return null;
+    }
+//-------------------------------------------------------------------------------------------
+
+    private void searching() {
+        String[] mSearch = {"Find by FirstName, type", "Find by Lastname, type", "Back to main menu"};
+        Menu m = new Menu("Employee Searching", mSearch) {
+            public void execute(int n) {
+                ArrayList<Candidate> rs = null;
+                String input1;
+                String input2;
+                switch (n) {
+
+                    case 1:
+                        input1 = getValue("Enter first name :");
+                        input2 = getValue("Enter CandidateType (Experience, Fresher or : ");
+                        rs = list.search(c -> c.getFirstName().equals(input1) && c.getCandidateType().equalsIgnoreCase(input2));
+                        break;
+                    case 2:
+                        input1 = getValue("Enter last name :");
+                        input2 = getValue("Enter CandidateType: ");
+                        rs = list.search(c -> c.getLastName().equals(input1) && c.getCandidateType().equalsIgnoreCase(input2));
+                        break;
+                    default:
+                        return;
+                }
+                if (rs != null) {
+                    list.display(rs);
+                }
+
+            }
+
+        };
+        m.run();
     }
 
 }
