@@ -13,7 +13,7 @@ import view.Validation;
 
 public class CompanyManager extends Menu<String> {
 
-    static String[] menu = {"Experience", "Exit"};
+    static String[] menu = {"Experience","Fresher","Intern", "Exit"};
     private CandidateManager list = new CandidateManager();
     Validation val = new Validation();
 
@@ -26,8 +26,15 @@ public class CompanyManager extends Menu<String> {
     public void execute(int n) {
         switch (n) {
             case 1:
-
+                list.addCandidate(inputCandidate(1));
+                break;
             case 2:
+                list.addCandidate(inputCandidate(2));
+                break;
+            case 3:
+                list.addCandidate(inputCandidate(3));
+                break;
+            case 4:
                 System.exit(0);
         }
     }
